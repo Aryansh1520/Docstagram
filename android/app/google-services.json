@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "569255552041",
+    "project_id": "docstagram-notif",
+    "storage_bucket": "docstagram-notif.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569255552041:android:609a3e55d2f459f622a838",
+        "android_client_info": {
+          "package_name": "com.example.docstagram_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3O7lJFR3oxpThYHkVnixP8tNUQnyWGEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
