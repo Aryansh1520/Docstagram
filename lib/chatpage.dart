@@ -16,6 +16,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'websocket_service.dart';
 
+// SENDER ID : 82091008-a484-4a89-ae75-a22bf8d6f3ac
+// RECEIVER ID : 4c2307ba-3d40-442f-b1ff-b271f63904ca
+
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -33,9 +36,9 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     _webSocketService = WebSocketService();
     
-//    _webSocketService.connect(dotenv.env['LOCALHOST']! + '/' + '82091008-a484-4a89-ae75-a22bf8d6f3ac'!);
-    final localhostUrl = 'ws://10.0.2.2:8000/ws/82091008-a484-4a89-ae75-a22bf8d6f3ac';
-    _webSocketService.connect(localhostUrl);
+    _webSocketService.connect(dotenv.env['SOCKET_URL']! + '/' + '82091008-a484-4a89-ae75-a22bf8d6f3ac'!);
+    // final localhostUrl = 'ws://10.0.2.2:8000/ws/82091008-a484-4a89-ae75-a22bf8d6f3ac';
+    // _webSocketService.connect(localhostUrl);
 
     _webSocketService.messages.listen((message) {
 

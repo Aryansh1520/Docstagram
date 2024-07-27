@@ -54,30 +54,44 @@ void setupFirebaseMessaging() {
   });
 }
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-  try {
-    await dotenv.load(fileName: ".env");
-    print("Dotenv loaded successfully.");
-  } catch (e) {
-    print("Error loading dotenv: $e");
-  }
-
-  await Firebase.initializeApp();
-
-  // Set up Firebase Messaging
-  setupFirebaseMessaging();
-
-  // Handle background messages
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  runApp(const MyApp());
-  await requestPermissions();
+  @override
+  _MyAppState createState() => _MyAppState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _MyAppState extends State<MyApp> {
+  String? _userId = "your_user_id_here"; // Replace with actual user ID
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeFCM();
+  }
+
+  void _initializeFCM() async {
+    // Request permissions if necessary
+    await requestPermissions();
+
+    // Get the token
+    String? token = await messaging.getToken();
+    if (token != null) {
+      // Send the token to your server and associate it with the user ID
+      _sendTokenToServer(token);
+    }
+
+    // Handle token refresh
+    messaging.onTokenRefresh.listen((newToken) {
+      _sendTokenToServer(newToken);
+    });
+  }
+
+  void _sendTokenToServer(String token) {
+    // Send the token to your server with the associated user ID
+    // Implement this method to send the token to your server
+    print("User ID: $_userId, FCM Token: $token");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,4 +150,25 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    await dotenv.load(fileName: ".env");
+    print("Dotenv loaded successfully.");
+  } catch (e) {
+    print("Error loading dotenv: $e");
+  }
+
+  await Firebase.initializeApp();
+
+  // Set up Firebase Messaging
+  setupFirebaseMessaging();
+
+  // Handle background messages
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  runApp(const MyApp());
 }
